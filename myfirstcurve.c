@@ -87,10 +87,15 @@ namespace GMlib {
     const T ct = _r * cos(t);
     const T st = _r * sin(t);
 
-    this->_p[0][0] = ct;
-    this->_p[0][1] = st;
-    this->_p[0][2] = T(0);
+    const T ct1 = t * cos(t);
+    const T st1 = t * sin(t);
 
+//    this->_p[0][0] = ct;
+//    this->_p[0][1] = st;
+//    this->_p[0][2] = T(0);
+    this->_p[0][0] = ct1;
+    this->_p[0][1] = st1;
+    this->_p[0][2] = t;
     if( this->_dm == GM_DERIVATION_EXPLICIT ) {
 
       if( d > 0 ) {

@@ -1,5 +1,6 @@
 #include "scenario.h"
 #include "myfirstcurve.h"
+#include "myspline.h"
 #include "testtorus.h"
 
 //// hidmanager
@@ -70,24 +71,53 @@ void Scenario::initializeScenario() {
 
 
   // Surface visualizers
-  auto surface_visualizer = new GMlib::PSurfNormalsVisualizer<float,3>;
+  //auto surface_visualizer = new GMlib::PSurfNormalsVisualizer<float,3>;
 
   // Surface
-  auto surface = new TestTorus;
-  surface->toggleDefaultVisualizer();
-  surface->insertVisualizer(surface_visualizer);
-  surface->replot(200,200,1,1);
-  scene()->insert(surface);
+//  auto surface = new TestTorus;
+//  surface->toggleDefaultVisualizer();
+//  surface->insertVisualizer(surface_visualizer);
+//  surface->replot(200,200,1,1);
+//  scene()->insert(surface);
 
   auto myCurve = new GMlib::Myfirstcurve<float>();
-  myCurve->toggleDefaultVisualizer();
-  myCurve->replot(200,0);
-  scene()->insert(myCurve);
+//  myCurve->toggleDefaultVisualizer();
+//  myCurve->replot(200,0);
+//  scene()->insert(myCurve);
+  int m = 8;
+  GMlib::DVector<GMlib::Vector<float,3>>p(m);
+  for (int i=0;i<m;i++){
+      p[i] = myCurve->getPosition(myCurve->getParStart() + (i*myCurve->getParEnd())/(m-1));
+      std::cout << p[i] <<std::endl;
+  }
 
-  surface->test01();
+  GMlib::DVector<GMlib::Vector<float,3>>c(8);
+  c[0] = GMlib::Vector<float,3>(0,0,0);
+  c[1] = GMlib::Vector<float,3>(1,1,0);
+  c[2] = GMlib::Vector<float,3>(2,2,0);
+  c[3] = GMlib::Vector<float,3>(3,3,0);
+  c[4] = GMlib::Vector<float,3>(4,3,0);
+  c[5] = GMlib::Vector<float,3>(5,1,0);
+  c[6] = GMlib::Vector<float,3>(6,0.5,0);
+  c[7] = GMlib::Vector<float,3>(7,0,0);
+
+  myPCurve = new GMlib::MSpline<float>(p,2);
+  myPCurve->toggleDefaultVisualizer();
+  myPCurve->replot(200,0);
+  scene()->insert(myPCurve);
+
+  //surface->test01();
 
 }
 
 void Scenario::cleanupScenario() {
 
 }
+
+void Scenario::callGl()
+{
+    if (myPCurve){
+        myPCurve->replot();
+    }
+}
+

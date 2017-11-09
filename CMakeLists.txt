@@ -111,6 +111,7 @@ set( HDRS
   testtorus.h
   scenario.h
   myfirstcurve.h
+  myspline.h
   )
 
 set( SRCS
