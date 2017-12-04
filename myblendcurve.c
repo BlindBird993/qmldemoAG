@@ -70,12 +70,15 @@ GMlib::MyBlendCurve<T>::MyBlendCurve( PCurve<T,3> *c1,  PCurve<T,3> *c2, T x)
         this->_p = _C1->evaluateParent(t,0);
     }
     else if (t < _C1->getParEnd()){
-        const T b1 = 1-_B((t-_C1->getParEnd()+_x*_C1->getParDelta())/(_x*_C1->getParDelta()));
-        const T b2 = _B((t-_C1->getParEnd()+_x*_C1->getParDelta())/(_x*_C1->getParDelta()));
-        this->_p = b1*_C1->evaluateParent(t,0) + b2*_C2->evaluateParent(t-(1-_x)*_C1->getParDelta(),0);//_C[i-2]*b1 + _C[i-1]*b2 + _C[i]*b3;
+        T _t1 = (t-_C1->getParEnd()+_x*_C1->getParDelta())/(_x*_C1->getParDelta());
+
+        const T b1 = 1-_B(_t1);
+        const T b2 = _B(_t1);
+
+        this->_p = b1*_C1->evaluateParent(t,0) + b2*_C2->evaluateParent(_C2->getParStart()+_t1*_x*_C2->getParDelta(),0);//_C[i-2]*b1 + _C[i-1]*b2 + _C[i]*b3;
     }
     else
-        this->_p = _C2->evaluateParent(t-(1-_x)*_C1->getParDelta(),0);
+        this->_p = _C2->evaluateParent(_C2->getParStart()+t-_C1->getParEnd()+_x*_C2->getParDelta(),0);
 
 
 
