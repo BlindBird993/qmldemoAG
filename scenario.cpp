@@ -2,7 +2,8 @@
 #include "myfirstcurve.h"
 #include "myspline.h"
 #include "testtorus.h"
-
+#include "mybcurve.h"
+#include "myblendcurve.h"
 //// hidmanager
 //#include "hidmanager/defaulthidmanager.h"
 
@@ -80,33 +81,59 @@ void Scenario::initializeScenario() {
 //  surface->replot(200,200,1,1);
 //  scene()->insert(surface);
 
-  auto myCurve = new GMlib::Myfirstcurve<float>();
+//  auto myCurve = new GMlib::Myfirstcurve<float>();
 //  myCurve->toggleDefaultVisualizer();
 //  myCurve->replot(200,0);
 //  scene()->insert(myCurve);
-  int m = 8;
-  GMlib::DVector<GMlib::Vector<float,3>>p(m);
-  for (int i=0;i<m;i++){
-      p[i] = myCurve->getPosition(myCurve->getParStart() + (i*myCurve->getParEnd())/(m-1));
-      std::cout << p[i] <<std::endl;
-  }
+//  int m = 20;
+//  GMlib::DVector<GMlib::Vector<float,3>>p(m);
+//  for (int i=0;i<m;i++){
+//      p[i] = myCurve->getPosition(myCurve->getParStart() + (i*myCurve->getParEnd())/(m-1));
+//      std::cout << p[i] <<std::endl;
+//  }
 
-  GMlib::DVector<GMlib::Vector<float,3>>c(8);
-  c[0] = GMlib::Vector<float,3>(0,0,0);
-  c[1] = GMlib::Vector<float,3>(1,1,0);
-  c[2] = GMlib::Vector<float,3>(2,2,0);
-  c[3] = GMlib::Vector<float,3>(3,3,0);
-  c[4] = GMlib::Vector<float,3>(4,3,0);
-  c[5] = GMlib::Vector<float,3>(5,1,0);
-  c[6] = GMlib::Vector<float,3>(6,0.5,0);
-  c[7] = GMlib::Vector<float,3>(7,0,0);
+//  GMlib::DVector<GMlib::Vector<float,3>>c(8);
+//  c[0] = GMlib::Vector<float,3>(0,0,0);
+//  c[1] = GMlib::Vector<float,3>(1,1,0);
+//  c[2] = GMlib::Vector<float,3>(2,2,0);
+//  c[3] = GMlib::Vector<float,3>(3,3,0);
+//  c[4] = GMlib::Vector<float,3>(4,3,0);
+//  c[5] = GMlib::Vector<float,3>(5,1,0);
+//  c[6] = GMlib::Vector<float,3>(6,0.5,0);
+//  c[7] = GMlib::Vector<float,3>(7,0,0);
 
-  myPCurve = new GMlib::MSpline<float>(p,2,8);
-  myPCurve->toggleDefaultVisualizer();
-  myPCurve->replot(200,0);
-  scene()->insert(myPCurve);
+//  myPCurve = new GMlib::MSpline<float>(p,2,5);
+//  myPCurve->toggleDefaultVisualizer();
+//  myPCurve->replot(200,0);
+//  scene()->insert(myPCurve);
 
-  //surface->test01();
+//  //surface->test01();
+
+// auto myBCurve = new GMlib::MyBCurve<float>(myCurve,5);
+//  myBCurve->toggleDefaultVisualizer();
+//  myBCurve->translate(GMlib::Vector<float,3>(3,0,0));
+//  myBCurve->replot(200,0);
+//  scene()->insert(myBCurve);
+
+
+  GMlib::Myfirstcurve<float>* myCurve1 = new GMlib::Myfirstcurve<float>();
+  GMlib::Myfirstcurve<float>* myCurve2 = new GMlib::Myfirstcurve<float>();
+  myCurve2->translate(GMlib::Vector<float,3>(0,3,0));
+  myCurve1->toggleDefaultVisualizer();
+  myCurve1->replot(200,0);
+  scene()->insert(myCurve1);
+
+  myCurve2->toggleDefaultVisualizer();
+  myCurve2->replot(200,0);
+  scene()->insert(myCurve2);
+
+
+  auto myMultiCurve = new GMlib::MyBlendCurve<float>(myCurve1, myCurve2,0.3);
+  myMultiCurve->toggleDefaultVisualizer();
+  myMultiCurve->setColor(GMlib::GMcolor::blue());
+  myMultiCurve->replot(200,0);
+  scene()->insert(myMultiCurve);
+
 
 }
 

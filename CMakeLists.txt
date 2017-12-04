@@ -112,6 +112,8 @@ set( HDRS
   scenario.h
   myfirstcurve.h
   myspline.h
+  mybcurve.h
+  myblendcurve.h
   )
 
 set( SRCS

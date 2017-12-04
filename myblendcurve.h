@@ -23,8 +23,8 @@
 
 
 
-#ifndef GM_PARAMETRICS_CURVES_MyBCurve_H
-#define GM_PARAMETRICS_CURVES_MyBCurve_H
+#ifndef GM_PARAMETRICS_CURVES_MyBlendCurve_H
+#define GM_PARAMETRICS_CURVES_MyBlendCurve_H
 
 
 #include "C:/STE6245/gmlib-50e676222977fbf777a43302e74828ed87558300/gmlib.git/modules/parametrics/src/gmpcurve.h"
@@ -34,13 +34,12 @@ namespace GMlib {
 
 
   template <typename T>
-  class MyBCurve : public PCurve<T,3> {
-    GM_SCENEOBJECT(MyBCurve)
+  class MyBlendCurve : public PCurve<T,3> {
+    GM_SCENEOBJECT(MyBlendCurve)
   public:
-    MyBCurve(  PCurve<T,3> *c, int n);
-    //MyBCurve( const DVector<Vector<T,3>> &c, int d, int n);
-    MyBCurve( const MyBCurve<T>& copy );
-    virtual ~MyBCurve();
+    MyBlendCurve(  PCurve<T,3> *c1,  PCurve<T,3> *c2, T x);
+    //MyBlendCurve( const DVector<Vector<T,3>> &c, int d, int n);
+    virtual ~MyBlendCurve();
 
     // Public local functions
 
@@ -62,11 +61,12 @@ namespace GMlib {
 
     // Protected data for the curve
 
-    DVector<PCurve<T,3>*>_C; //local curves
-    DVector<T>           _t; //knot vector
-    int                  _d; //degree
-    T                    _s;
-    T                    _e;
+//    DVector<PCurve<T,3>*>_C; //local curves
+//    DVector<T>           _t; //knot vector
+    T                    _x;
+    PCurve<T,3> *        _C1;
+    PCurve<T,3> *        _C2;
+
 
   private:
 
@@ -77,12 +77,13 @@ namespace GMlib {
     void                _createControlPoints(const DVector<Vector<T,3>> &p,int n);
 
 
-  }; // END class MyBCurve
+
+  }; // END class MyBlendCurve
 
 } // END namepace GMlib
 
-// Include MyBCurve class function implementations
-#include "mybcurve.c"
+// Include MyBlendCurve class function implementations
+#include "myblendcurve.c"
 
 
-#endif // GM_PARAMETRICS_CURVES_MyBCurve_H
+#endif // GM_PARAMETRICS_CURVES_MyBlendCurve_H

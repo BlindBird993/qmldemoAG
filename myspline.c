@@ -22,7 +22,6 @@
 #include "C:/STE6245/gmlib-50e676222977fbf777a43302e74828ed87558300/gmlib.git/modules/scene/src/visualizers/gmselectorgridvisualizer.h"
 
 
-
 namespace GMlib {
 
 
@@ -94,7 +93,7 @@ namespace GMlib {
     int i = _findIndex(t);
     const T b1 = (1-_W(i,1,t))*(1-_W(i-1,2,t));
     const T b2 = ((1-_W(i,1,t))*_W(i-1,2,t))+(_W(i,1,t)*(1-_W(i,2,t)));
-    const T b3 = (_W(i,1,t)*_W(i,2,t));//A[j][i]
+    const T b3 = (_W(i,1,t)*_W(i,2,t));//A[i][j]
 
 
     this->_p[0] = _C[i-2]*b1 + _C[i-1]*b2 + _C[i]*b3;
