@@ -47,27 +47,6 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
         this->insert(cu);
     }
 }
-//  template <typename T>
-//  inline
-//  MyBCurve<T>::MyBCurve(const DVector<Vector<T,3>> &c, int d) {
-//    _d = d;
-//    _makeKnotVector(c.getDim());
-//    _C = c;
-//    for (int i=0;i<_C.getDim();i++){
-//        Selector<T,3>* s = new Selector<T,3>(_C[i],i,this);
-//        this->insert(s);
-
-//    }
-//    auto sk = new SelectorGridVisualizer<T>;
-//    sk->setSelectors(_C,0,isClosed());
-//    this->insertVisualizer(sk);
-
-//  }
-
-//  template <typename T>
-//  inline
-//  MyBCurve<T>::MyBCurve(const DVector<Vector<T,3>> &c, int d, int n) {
-//  }
 
   template <typename T>
   inline
@@ -107,11 +86,6 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
     const T b2 = _B(_W(i,1,t));
 
 
-//    const T b1 = (1-_W(i,1,t))*(1-_W(i-1,2,t));
-
-//    const T b2 = ((1-_W(i,1,t))*_W(i-1,2,t))+(_W(i,1,t)*(1-_W(i,2,t)));
-
-//    const T b3 = (_W(i,1,t)*_W(i,2,t));
 
 //                 local curves
     this->_p = b1*_C[i-1]->evaluateParent(t,0) + b2*_C[i]->evaluateParent(t,0);//_C[i-2]*b1 + _C[i-1]*b2 + _C[i]*b3;
@@ -158,7 +132,6 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
   void MyBCurve<T>::_makeKnotVector(int n)
   {
 
-      //n = _C.getDim();
       auto local_d = (_e-_s)/(n-1);
 
       _t.setDim(n+_d+1);
@@ -170,15 +143,6 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
 
       _t[n] = _t[n+1] = _e;
 
-      //        for(int i = 0;i<=_d;i++){
-      //            _t[i] = 0;
-      //        }
-      //        for(int i=_d+1;i<= n;i++){
-      //            _t[i] = i-_d;
-      //        }
-      //        for(int i=n+1;i<=n+_d;i++){
-      //            _t[i] = _t[i-1];
-      //        }
   }
 
   template<typename T>
@@ -191,19 +155,22 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
               A[i][j] = T(0);
           }
       }
-//      for (int j = 0;j<m;j++){
-//          A[j][findIndex(_p[0])]
-
-//      }
-
-
 
   }
 
   template<typename T>
   T MyBCurve<T>::_B(T t) const
   {
-    return 3*(t*t) - 2*(t*t*t);
+      return 3*(t*t) - 2*(t*t*t);
+  }
+
+  template<typename T>
+  void GMlib::MyBCurve<T>::localSimulate(double dt)
+  {
+      for (int i = 0;i<_C.getDim();i++){
+          _C[i]->rotate(dt,GMlib::Vector<float,3>(1,0,0));
+      }
+
   }
 
 

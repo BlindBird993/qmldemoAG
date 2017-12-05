@@ -136,11 +136,11 @@ void Scenario::initializeScenario() {
 
 
 
-   auto myBCurve = new GMlib::MyBCurve<float>(myCurve1,8);
-    myBCurve->toggleDefaultVisualizer();
-    myBCurve->translate(GMlib::Vector<float,3>(3,0,0));
-    myBCurve->replot(200,0);
-    scene()->insert(myBCurve);
+    mybcurve = new GMlib::MyBCurve<float>(myCurve1,8);
+    mybcurve->toggleDefaultVisualizer();
+    mybcurve->translate(GMlib::Vector<float,3>(3,0,0));
+    mybcurve->replot(200,0);
+    scene()->insert(mybcurve);
 }
 
 void Scenario::cleanupScenario() {
@@ -151,6 +151,10 @@ void Scenario::callGl()
 {
     if (myPCurve){
         myPCurve->replot();
+    }
+
+    if (mybcurve){
+        mybcurve->replot(100,0);
     }
 }
 
