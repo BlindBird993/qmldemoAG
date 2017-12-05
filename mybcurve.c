@@ -33,13 +33,16 @@ template<typename T>
 GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
 {
     _d = 1;
-//    _s  = c->getStartP();
-//    _e = c->getEndP();
+    _s  = c->getParStart();
+    _e = c->getParEnd();
 
     _makeKnotVector(n);
-
+    _C.setDim(n);
     for(int i=0;i<n;i++){
         auto cu = new PSubCurve<T>(c,_t[i],_t[i+2],_t[i+1]);
+        cu->toggleDefaultVisualizer();
+        cu->replot(21,0);
+        cu->setCollapsed(true);
         _C[i] = cu;
         this->insert(cu);
     }

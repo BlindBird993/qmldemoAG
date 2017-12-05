@@ -30,7 +30,7 @@ namespace GMlib {
 // Constructors and destructor           **
 //*****************************************
 template<typename T>
-GMlib::MyBlendCurve<T>::MyBlendCurve( PCurve<T,3> *c1,  PCurve<T,3> *c2, T x)
+MyBlendCurve<T>::MyBlendCurve( PCurve<T,3> *c1,  PCurve<T,3> *c2, T x)
 {
      _x = x;
      _C1 = c1;

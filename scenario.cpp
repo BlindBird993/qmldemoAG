@@ -117,24 +117,30 @@ void Scenario::initializeScenario() {
 
 
   GMlib::Myfirstcurve<float>* myCurve1 = new GMlib::Myfirstcurve<float>();
-  GMlib::Myfirstcurve<float>* myCurve2 = new GMlib::Myfirstcurve<float>();
-  myCurve2->translate(GMlib::Vector<float,3>(0,3,0));
-  myCurve1->toggleDefaultVisualizer();
-  myCurve1->replot(200,0);
-  scene()->insert(myCurve1);
+//  GMlib::Myfirstcurve<float>* myCurve2 = new GMlib::Myfirstcurve<float>();
+//  myCurve2->translate(GMlib::Vector<float,3>(0,3,0));
+//  myCurve1->toggleDefaultVisualizer();
+//  myCurve1->replot(200,0);
+//  scene()->insert(myCurve1);
 
-  myCurve2->toggleDefaultVisualizer();
-  myCurve2->replot(200,0);
-  scene()->insert(myCurve2);
-
-
-  auto myMultiCurve = new GMlib::MyBlendCurve<float>(myCurve1, myCurve2,0.3);
-  myMultiCurve->toggleDefaultVisualizer();
-  myMultiCurve->setColor(GMlib::GMcolor::blue());
-  myMultiCurve->replot(200,0);
-  scene()->insert(myMultiCurve);
+//  myCurve2->toggleDefaultVisualizer();
+//  myCurve2->replot(200,0);
+//  scene()->insert(myCurve2);
 
 
+//  auto myMultiCurve = new GMlib::MyBlendCurve<float>(myCurve1, myCurve2,0.3);
+//  myMultiCurve->toggleDefaultVisualizer();
+//  myMultiCurve->setColor(GMlib::GMcolor::blue());
+//  myMultiCurve->replot(200,0);
+//  scene()->insert(myMultiCurve);
+
+
+
+   auto myBCurve = new GMlib::MyBCurve<float>(myCurve1,8);
+    myBCurve->toggleDefaultVisualizer();
+    myBCurve->translate(GMlib::Vector<float,3>(3,0,0));
+    myBCurve->replot(200,0);
+    scene()->insert(myBCurve);
 }
 
 void Scenario::cleanupScenario() {
