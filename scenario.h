@@ -26,6 +26,7 @@ private:
 
   GMlib::PCurve<float,3>* myPCurve{nullptr};
   GMlib::PCurve<float,3>* mybcurve{nullptr};
+  GMlib::PSurf<float,3>* mybsurfe{nullptr};
 
 public slots:
 

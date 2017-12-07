@@ -3,7 +3,9 @@
 #include "myspline.h"
 #include "testtorus.h"
 #include "mybcurve.h"
+#include "mybsurface.h"
 #include "myblendcurve.h"
+#include "myclosedcurve.h"
 //// hidmanager
 //#include "hidmanager/defaulthidmanager.h"
 
@@ -71,17 +73,17 @@ void Scenario::initializeScenario() {
 
 
 
-  // Surface visualizers
-  //auto surface_visualizer = new GMlib::PSurfNormalsVisualizer<float,3>;
+   //Surface visualizers
+//  auto surface_visualizer = new GMlib::PSurfNormalsVisualizer<float,3>;
 
-  // Surface
-//  auto surface = new TestTorus;
+//   //Surface
+//  auto surface = new GMlib::PTorus;
 //  surface->toggleDefaultVisualizer();
 //  surface->insertVisualizer(surface_visualizer);
 //  surface->replot(200,200,1,1);
 //  scene()->insert(surface);
 
-//  auto myCurve = new GMlib::Myfirstcurve<float>();
+  auto myCurve = new GMlib::Myfirstcurve<float>();
 //  myCurve->toggleDefaultVisualizer();
 //  myCurve->replot(200,0);
 //  scene()->insert(myCurve);
@@ -102,7 +104,9 @@ void Scenario::initializeScenario() {
 //  c[6] = GMlib::Vector<float,3>(6,0.5,0);
 //  c[7] = GMlib::Vector<float,3>(7,0,0);
 
-//  myPCurve = new GMlib::MSpline<float>(p,2,5);
+
+  //Create a plane, paste it into the BSurf constructor as a model
+//  myPCurve = new GMlib::MSpline<float>(p,2,8);
 //  myPCurve->toggleDefaultVisualizer();
 //  myPCurve->replot(200,0);
 //  scene()->insert(myPCurve);
@@ -136,11 +140,22 @@ void Scenario::initializeScenario() {
 
 
 
-    mybcurve = new GMlib::MyBCurve<float>(myCurve1,8);
-    mybcurve->toggleDefaultVisualizer();
-    mybcurve->translate(GMlib::Vector<float,3>(3,0,0));
-    mybcurve->replot(200,0);
-    scene()->insert(mybcurve);
+//    mybcurve = new GMlib::MyBCurve<float>(myCurve1,8);
+//    mybcurve->toggleDefaultVisualizer();
+//    mybcurve->translate(GMlib::Vector<float,3>(3,0,0));
+//    mybcurve->replot(200,0);
+//    scene()->insert(mybcurve);
+
+  auto myMSurface = new GMlib::PPlane<float>(GMlib::Point<float,3>(-10.0f, 10.0f, 20.0f),
+                             GMlib::Vector<float,3>(0.0f, -20.0f, 0.0f),
+                             GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f));
+  auto normalVis = new GMlib::PSurfNormalsVisualizer<float,3>();
+
+  mybsurfe = new GMlib::MyBSurface<float>(myMSurface,4,4);
+  mybsurfe->toggleDefaultVisualizer();
+  mybsurfe->insertVisualizer(normalVis);
+  mybsurfe->replot(50,50,1,1);
+  scene()->insert(mybsurfe);
 }
 
 void Scenario::cleanupScenario() {
@@ -155,6 +170,10 @@ void Scenario::callGl()
 
     if (mybcurve){
         mybcurve->replot(100,0);
+    }
+
+    if (mybsurfe){
+        mybsurfe->replot(50,50,1,1);
     }
 }
 

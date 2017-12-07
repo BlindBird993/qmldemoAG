@@ -167,6 +167,12 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
   template<typename T>
   void GMlib::MyBCurve<T>::localSimulate(double dt)
   {
+
+      for (int i = 0;i<_C.getDim();i++){
+          //if var < number -> translate >, else translate <, number ++ --
+          _C[i]->rotate(dt,GMlib::Vector<float,3>(1,0,0));
+      }
+
       for (int i = 0;i<_C.getDim();i++){
           _C[i]->rotate(dt,GMlib::Vector<float,3>(1,0,0));
       }
