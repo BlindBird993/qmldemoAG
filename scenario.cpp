@@ -157,12 +157,34 @@ void Scenario::initializeScenario() {
 //  mybsurfe->replot(50,50,1,1);
 //  scene()->insert(mybsurfe);
 
-  auto myClosedCurve = new GMlib::MyClosedCurve<float>();
-  mybcurve = new GMlib::MyBCurve<float>(myClosedCurve,8);
-  mybcurve->toggleDefaultVisualizer();
-  mybcurve->translate(GMlib::Vector<float,3>(3,0,0));
-  mybcurve->replot(200,0);
-  scene()->insert(mybcurve);
+  //torus
+//    auto myClosedTorus = new GMlib::PTorus<float>(1.5f,0.5f,0.5f);
+//    auto normalVis = new GMlib::PSurfNormalsVisualizer<float,3>();
+
+//    mybsurfe = new GMlib::MyBSurface<float>(myClosedTorus,4,4);
+//    mybsurfe->toggleDefaultVisualizer();
+//    mybsurfe->insertVisualizer(normalVis);
+//    mybsurfe->replot(50,50,1,1);
+//    scene()->insert(mybsurfe);
+
+ //cylinder
+    auto cylinder=new GMlib::PCylinder<float>(2,2,15);
+    auto normalVis = new GMlib::PSurfNormalsVisualizer<float,3>();
+
+    mybsurfe = new GMlib::MyBSurface<float>(cylinder,4,4);
+    mybsurfe->toggleDefaultVisualizer();
+    mybsurfe->insertVisualizer(normalVis);
+    mybsurfe->replot(50,50,1,1);
+    scene()->insert(mybsurfe);
+
+//  auto myClosedCurve = new GMlib::MyClosedCurve<float>();
+//  mybcurve = new GMlib::MyBCurve<float>(myClosedCurve,20);
+//  mybcurve->toggleDefaultVisualizer();
+//  mybcurve->translate(GMlib::Vector<float,3>(3,0,0));
+//  mybcurve->replot(200,0);
+//  scene()->insert(mybcurve);
+
+
 
 
 }
