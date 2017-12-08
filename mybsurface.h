@@ -76,6 +76,7 @@ namespace GMlib {
     T                    _eu;
     T                    _sv;
     T                    _ev;
+    bool                 _isclosed;
 
   private:
 

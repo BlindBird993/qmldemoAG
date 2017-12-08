@@ -38,6 +38,15 @@ GMlib::MyBSurface<T>::MyBSurface(PSurf<T,3> *s, int n1, int n2)
     _sv = s->getParStartV();
     _ev = s->getParEndV();
 
+    if (s->isClosed()){
+        _isclosed = true;
+        n1++;
+        n2++;
+    }
+    else {
+        _isclosed = false;
+    }
+
     _makeKnotVectors(_u,n1,_su,_eu);
     _makeKnotVectors(_v,n2,_sv,_ev);
 

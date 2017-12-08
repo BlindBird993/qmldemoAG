@@ -68,6 +68,7 @@ namespace GMlib {
     int                  _d; //degree
     T                    _s;
     T                    _e;
+    bool                 _isclosed;
 
   private:
 
@@ -75,7 +76,7 @@ namespace GMlib {
     T                   _B(T t) const;
     int                 _findIndex(T t) const;
     void                _makeKnotVector(int n);
-    void                _createControlPoints(const DVector<Vector<T,3>> &p,int n);
+    void                _createLocalCurves(PCurve<T,3> *c,int n);
 
 
   }; // END class MyBCurve

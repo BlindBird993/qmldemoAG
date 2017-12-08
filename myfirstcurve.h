@@ -59,6 +59,7 @@ namespace GMlib {
     T                   getEndP()   const override;
 
 
+
     // Protected data for the curve
     T               _r;
 
