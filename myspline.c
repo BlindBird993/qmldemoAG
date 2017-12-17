@@ -47,9 +47,9 @@ namespace GMlib {
   }
 
   template <typename T>
-  inline
+  inline               //p vector of points sampled from the original curve, n number of control points we want
   MSpline<T>::MSpline(const DVector<Vector<T,3>> &p, int d, int n) {
-      _d = d;
+      _d = d;//dimension
       _makeKnotVector(n);
       _createControlPoints(p,n);//surfaces
 
@@ -90,22 +90,20 @@ namespace GMlib {
   void MSpline<T>::eval( T t, int d, bool /*l*/ ) const {
 
     this->_p.setDim( d + 1 );
-    int i = _findIndex(t);
-    const T b1 = (1-_W(i,1,t))*(1-_W(i-1,2,t));
+    int i = _findIndex(t);//parameter
+    const T b1 = (1-_W(i,1,t))*(1-_W(i-1,2,t));//basis functions
     const T b2 = ((1-_W(i,1,t))*_W(i-1,2,t))+(_W(i,1,t)*(1-_W(i,2,t)));
-    const T b3 = (_W(i,1,t)*_W(i,2,t));//A[i][j]
+    const T b3 = (_W(i,1,t)*_W(i,2,t));
 
 
     this->_p[0] = _C[i-2]*b1 + _C[i-1]*b2 + _C[i]*b3;
-
-
 
   }
 
 
   template <typename T>
   T MSpline<T>::getStartP() const {
-    return _t(_d);
+    return _t(_d);//domain for the curve
   }
 
 
@@ -118,7 +116,6 @@ namespace GMlib {
   T MSpline<T>::_W(int i, int d, T t) const
   {
       return ((t - _t(i))/(_t(i+d)-_t(i)));
-
   }
 
   template<typename T>
@@ -140,8 +137,7 @@ namespace GMlib {
   void MSpline<T>::_makeKnotVector(int n)
   {
 
-      //n = _C.getDim();
-      _t.setDim(n+_d+1);
+      _t.setDim(n+_d+1);//order = degree + 1
 
         for(int i = 0;i<=_d;i++){
             _t[i] = 0;
@@ -157,34 +153,34 @@ namespace GMlib {
   template<typename T>
   void MSpline<T>::_createControlPoints(const DVector<Vector<T, 3> > &p, int n)
   {
-      int m = p.getDim();
-      _C.setDim(n);
+      int m = p.getDim();//number of control points for basis
+      _C.setDim(n);//number of control points we are looking for
       DMatrix<T> A(m,n);
       for (int i = 0; i<m; i++){
           for (int j = 0; j<n;j++){
-              A[i][j] = T(0);
+              A[i][j] = T(0);//fill with zeros
           }
       }
       for (int i = 0;i<m;i++){
-          T t = _t[0]+i*(getEndP()-getStartP())/(m-1);
+          T t = _t[0]+i*(getEndP()-getStartP())/(m-1);//getParDelta, define ti, for the control points pi use them to evaluate c[ti] = pi
 
 
-          int j = _findIndex(t);
+          int j = _findIndex(t); //recalculate basis functions for every ti
           const T b1 = (1-_W(j,1,t))*(1-_W(j-1,2,t));
           const T b2 = ((1-_W(j,1,t))*_W(j-1,2,t))+(_W(j,1,t)*(1-_W(j,2,t)));
           const T b3 = (_W(j,1,t)*_W(j,2,t));
 
           A[i][j-2] = b1;
           A[i][j-1] = b2;
-          A[i][j] = b3;
+          A[i][j] = b3; //set values into the matrix
 
       }
       DMatrix<T> Atrans = A;
       Atrans.transpose();
-      DMatrix<T> B = Atrans*A;
+      DMatrix<T> B = Atrans*A;//apply least square
       B.invert();
-      DVector<Vector<T,3>> x = Atrans*p;
-      _C = B*x;
+      DVector<Vector<T,3>> x = Atrans*p; //vector of new control points
+      _C = B*x;//new control points vector for our curve
       for(int i=0;i<_C.getDim();i++){
           Selector<T,3>* s = new Selector<T,3>(_C[i],i,this);
           this->insert(s);

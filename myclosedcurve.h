@@ -37,7 +37,7 @@ namespace GMlib {
   class MyClosedCurve : public PCurve<T,3> {
     GM_SCENEOBJECT(MyClosedCurve)
   public:
-    MyClosedCurve( T radius = T(40) );
+    MyClosedCurve( T radius = T(20) );
     MyClosedCurve( const MyClosedCurve<T>& copy );
     virtual ~MyClosedCurve();
 

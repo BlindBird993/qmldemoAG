@@ -90,12 +90,10 @@ namespace GMlib {
     const T ct1 = t * cos(t);
     const T st1 = t * sin(t);
 
-//    this->_p[0][0] = ct;
-//    this->_p[0][1] = st;
-//    this->_p[0][2] = T(0);
-    this->_p[0][0] = ct1;
-    this->_p[0][1] = st1;
-    this->_p[0][2] = t;
+    this->_p[0][0] = ct1;//no derivative, x
+    this->_p[0][1] = st1; //y
+    this->_p[0][2] = t; //z
+    //do not need
     if( this->_dm == GM_DERIVATION_EXPLICIT ) {
 
       if( d > 0 ) {
@@ -115,13 +113,13 @@ namespace GMlib {
 
   template <typename T>
   T Myfirstcurve<T>::getStartP() const {
-    return T(0);
+    return T(0);//domain start
   }
 
 
   template <typename T>
   T Myfirstcurve<T>::getEndP()const {
-    return T( M_2PI );
+    return T( M_2PI );//domain end
   }
 
 

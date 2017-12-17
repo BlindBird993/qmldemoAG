@@ -206,7 +206,6 @@ GMlib::MyBSurface<T>::MyBSurface(PSurf<T,3> *s, int n1, int n2)
           t[0] = t[1] - (t[n] - t[n-1]);
           t[n+1] = t[n] + (t[2] - t[1]);
       }
-      std::cout << "t is " << t << std::endl;
 
   }
 

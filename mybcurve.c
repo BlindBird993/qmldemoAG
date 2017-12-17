@@ -32,29 +32,20 @@ namespace GMlib {
 template<typename T>
 GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
 {
-    _d = 1;
-    _s  = c->getParStart();
-    _e = c->getParEnd();
+    _d = 1;//degree is 1, means we have
+    _s  = c->getParStart();//start
+    _e = c->getParEnd();//end
 
 
     if (c->isClosed()){
         _isclosed = true;
-        n++;
+        n++;//number of subcurves,knots, for closed we need at least n+1 knots
     }
     else {
         _isclosed = false;
     }
 
     _makeKnotVector(n);
-//    _C.setDim(n);
-//    for(int i=0;i<n;i++){
-//        auto cu = new PSubCurve<T>(c,_t[i],_t[i+2],_t[i+1]);
-//        cu->toggleDefaultVisualizer();
-//        cu->replot(21,0);
-//        cu->setCollapsed(true);
-//        _C[i] = cu;
-//        this->insert(cu);
-//    }
     _createLocalCurves(c,n);
 }
 
@@ -93,15 +84,10 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
     int i = _findIndex(t);
 
     const T b1 = 1-_B(_W(i,1,t));
-    const T b2 = _B(_W(i,1,t));
-
-
+    const T b2 = _B(_W(i,1,t));//computed equally for both cases. For closed with the same indices as for the references to the local curves
 
 //                 local curves
-    this->_p = b1*_C[i-1]->evaluateParent(t,0) + b2*_C[i]->evaluateParent(t,0);//_C[i-2]*b1 + _C[i-1]*b2 + _C[i]*b3;
-
-
-
+    this->_p = b1*_C[i-1]->evaluateParent(t,0) + b2*_C[i]->evaluateParent(t,0);
   }
 
 
@@ -152,16 +138,12 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
 
       _t[n] = _t[n+1] = _e;
 
-      std::cout << "_t = " << _t << std::endl;
-
       if (_isclosed){
-
+            // two first and two last knot intervals must be equal, it must be kept if a knot value is changed
           _t[0] = _t[1] - (_t[n] - _t[n-1]);
           _t[n+1] = _t[n] + (_t[2] - _t[1]);
       }
-      std::cout << "closed _t = " << _t << std::endl;
 
-      //if closed t[0] = t[1] - (t[n] - t[n-1]), t[n+1] = t[n] + (t[2] - t[1])
   }
 
   template<typename T>
@@ -172,7 +154,7 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
           auto cu = new PSubCurve<T>(c,_t[i],_t[i+2],_t[i+1]);
           cu->toggleDefaultVisualizer();
           cu->replot(21,0);
-          cu->setCollapsed(true);
+          cu->setCollapsed(true); //collapse subcurves so not to see them on the scene
           _C[i] = cu;
           this->insert(cu);
       }
@@ -200,13 +182,8 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
   void GMlib::MyBCurve<T>::localSimulate(double dt)
   {
 
-//      for (int i = 0;i<_C.getDim();i++){
-//          //if var < number -> translate >, else translate <, number ++ --
-//          _C[i]->rotate(dt,GMlib::Vector<float,3>(1,0,0));
-//      }
-
       for (int i = 0;i<_C.getDim();i++){
-          _C[i]->rotate(dt,GMlib::Vector<float,3>(1,0,0));
+          _C[i]->rotate(dt,GMlib::Vector<float,3>(1,1,0));
       }
 
   }

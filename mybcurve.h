@@ -38,7 +38,6 @@ namespace GMlib {
     GM_SCENEOBJECT(MyBCurve)
   public:
     MyBCurve(  PCurve<T,3> *c, int n);
-    //MyBCurve( const DVector<Vector<T,3>> &c, int d, int n);
     MyBCurve( const MyBCurve<T>& copy );
     virtual ~MyBCurve();
 
