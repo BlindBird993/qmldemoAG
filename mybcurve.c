@@ -110,7 +110,7 @@ GMlib::MyBCurve<T>::MyBCurve(PCurve<T,3> *c, int n)
   }
 
   template<typename T>
-  int MyBCurve<T>::_findIndex(T t) const
+  int MyBCurve<T>::_findIndex(T t) const //find index of ti in the knot vector, which term of the sum is different from 0
   {
     int i=_d;
     int n = _C.getDim();

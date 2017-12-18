@@ -68,9 +68,9 @@ namespace GMlib {
 
     // Protected data for the curve
 
-    DMatrix<PSurf<T,3>*> _S; //local curves
-    DVector<T>           _u; //knot vector
-    DVector<T>           _v; //knot vector
+    DMatrix<PSurf<T,3>*> _S; //values of each part of local surfaces
+    DVector<T>           _u; //knot vector for U
+    DVector<T>           _v; //knot vector for V
     int                  _d; //degree
     T                    _su;
     T                    _eu;
