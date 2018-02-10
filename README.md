@@ -13,4 +13,4 @@ During the work the following tasks were done:
 - Using affine transformations of local curves to make a dynamic visual special effect.
 - Implementation of version of a GERBS surface of blending spline type.
 
-[Link to video with deomonstration of the simulation results and short description of work done](https://www.dropbox.com/sh/pb9px8lpyiisok7/AAA__Vl-Mp_Zuse2X2Y3vz85a?dl=0)
+[Link to video with demonstration of the simulation results and short description of work done](https://www.dropbox.com/sh/pb9px8lpyiisok7/AAA__Vl-Mp_Zuse2X2Y3vz85a?dl=0)
